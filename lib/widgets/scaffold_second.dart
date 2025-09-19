@@ -1,23 +1,24 @@
 import 'dart:developer';
 
 import 'package:eap_student/constants/const.dart';
+import 'package:eap_student/views/terms_conditions.dart';
 import 'package:eap_student/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/providers.dart';
+import '../views/notifications.dart';
+import '../views/settings.dart';
+import '../views/support.dart';
 import 'custom_bottom_navbar.dart';
 import 'custom_inkwell.dart';
-import 'package:eap_student/views/add.dart';
-import 'package:eap_student/views/dashboard.dart';
-import 'package:eap_student/views/history.dart';
-import 'package:eap_student/views/quiz.dart';
-import 'package:eap_student/views/user.dart';
+
 class CustomScaffold extends StatefulWidget {
   final Widget? mainBody;
-  final double? appBarHeight;
 
-  const CustomScaffold({super.key, this.mainBody, this.appBarHeight = 88});
+  final String? titleCentr;
+
+  const CustomScaffold({super.key, this.mainBody,this.titleCentr});
 
   @override
   State<CustomScaffold> createState() => _CustomScaffoldState();
@@ -26,10 +27,12 @@ class CustomScaffold extends StatefulWidget {
 class _CustomScaffoldState extends State<CustomScaffold> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   bool isDark = false;
-
+  final List<String> title = ["","Setup Your Test","Add The Test","History","Profile"];
   @override
   Widget build(BuildContext context) {
-    double appheight = Provider.of<OurProviderClass>(context,listen: false).getIndex ==0 ?88.0:56.0;
+    int currentIndex= Provider.of<OurProviderClass>(context,listen: false).getIndex;
+    double appheight = currentIndex ==0 ?88.0:76.0;
+
     return Scaffold(
       key: scaffoldKey,
       drawerScrimColor: Colors.transparent,
@@ -38,6 +41,7 @@ class _CustomScaffoldState extends State<CustomScaffold> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(appheight),
         child: AppBar(
+          centerTitle: currentIndex !=0?true:false,
           toolbarHeight: appheight,
           scrolledUnderElevation: 0,
           elevation: 0,
@@ -48,7 +52,8 @@ class _CustomScaffoldState extends State<CustomScaffold> {
           automaticallyImplyLeading: false,
           backgroundColor: CustomAppColors.primaryColor,
 
-          title: Column(
+          title:currentIndex ==0?
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -59,7 +64,8 @@ class _CustomScaffoldState extends State<CustomScaffold> {
                 style: CustomTextStyles.text14WhiteW400,
               ),
             ],
-          ),
+          )
+              :Text(widget.titleCentr?? title[currentIndex],style: CustomTextStyles.text24White600,),
 
           leading:!ModalRoute.of(context)!.isFirst
               ? CustomInkwell(
@@ -68,30 +74,45 @@ class _CustomScaffoldState extends State<CustomScaffold> {
                   },
                   child: const Center(
                     child: Padding(
-                      padding: EdgeInsets.all(0.0), // better touch area
-                      child: Icon(Icons.arrow_back, color: Colors.black),
+                      padding: EdgeInsets.all(0.0),
+                      child: Icon(Icons.arrow_back, color: Colors.white),
                     ),
                   ),
                 )
-              : CustomInkwell(
-                  onTap: () {
-                    FocusScope.of(context).unfocus();
-                    scaffoldKey.currentState?.openDrawer();
-                  },
-                  child: ImageIcon(
-                    AssetImage("assets/icons/menue.png"),
-                    size: 12,
-                    color: CustomAppColors.grey_f5f5f5,
+              : Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: CustomInkwell(
+
+                            color: CustomAppColors.grey_a0a0a0,
+                    onTap: () {
+                      FocusScope.of(context).unfocus();
+                      scaffoldKey.currentState?.openDrawer();
+                    },
+
+                    child:ImageIcon(
+                      AssetImage("assets/icons/menue.png"),
+
+                      color: CustomAppColors.grey_f5f5f5,
+                    ),
                   ),
-                ),
+              ),
           actions: [
-            const ImageIcon(
-              AssetImage("assets/icons/notifications.png"),
-              size: 28,
-              color: CustomAppColors.grey_f5f5f5,
+            CustomInkwell(
+              radius: 20,
+              color: CustomAppColors.grey_a0a0a0,
+              onTap: (){},
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: const ImageIcon(
+                  AssetImage("assets/icons/notifications.png"),
+                  size: 28,
+                  color: CustomAppColors.grey_f5f5f5,
+                ),
+              ),
             ),
             const SizedBox(width: 10),
-            Image.asset("assets/images/Avatar.png", width: 40, height: 40),
+            if(currentIndex==0)
+              Image.asset("assets/images/Avatar.png", width: 40, height: 40),
           ],
         ),
       ),
@@ -178,22 +199,37 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     SizedBox(height: 20),
                     Divider(color: CustomAppColors.lightGreyColor),
                     SizedBox(height: 12),
-                    drawerItemContainer("Notifications", "notifications"),
-                    drawerItemContainer("History", "history"),
-                    drawerItemContainer("Tutorials", "tutorials"),
-                    drawerItemContainer("Settings", "settings"),
-                    drawerItemContainer("Support", "contact_support"),
                     drawerItemContainer(
-                      "Terms & Conditions",
-                      "term_and_conditions",
+                        title: "Notifications",
+                        page: NotificationsScreen(),
+                        iconPath: "notifications"),
+                    drawerItemContainer(
+                        title: "History",
+                        onTap: (){Provider.of<OurProviderClass>(context,listen: false).changeBottomNavBarIndex(3);},
+                        iconPath: "history"),
+                    drawerItemContainer(
+                        title: "Tutorials",
+                        iconPath: "tutorials"),
+                    drawerItemContainer(
+                        title: "Settings",
+                        page: SettingsScreen(),
+                        iconPath: "settings"),
+                    drawerItemContainer(
+                      page: SupportScreen(),
+                        title: "Support",
+                        iconPath: "contact_support"),
+                    drawerItemContainer(
+                      page: TermsConditionsScreen(),
+                      title: "Terms & Conditions",
+                      iconPath: "term_and_conditions",
                     ),
                   ],
                 ),
               ),
 
               drawerItemContainer(
-                "Theme",
-                "light_mode",
+                title: "Theme",
+               iconPath:  "light_mode",
                 iconColor: CustomAppColors.greyColor,
                 trailing: Switch(
                   trackOutlineColor: WidgetStatePropertyAll(
@@ -224,30 +260,58 @@ class _CustomDrawerState extends State<CustomDrawer> {
   }
 }
 
-Widget drawerItemContainer(
-  String title,
-  String iconPath, {
-  Color? iconColor,
-  Widget? trailing,
-}) {
-  return Container(
-    margin: const EdgeInsets.symmetric(vertical: 10),
-    child: CustomInkwell(
-      onTap: () {},
-      child: Row(
-        children: [
-          ImageIcon(
-            AssetImage("assets/icons/${iconPath}.png"),
-            color: iconColor ?? CustomAppColors.grey_a0a0a0,
-            size: 26,
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(title, style: CustomTextStyles.text16GreyA0A0A0W500),
-          ),
-          if (trailing != null) trailing,
-        ],
+
+
+
+class drawerItemContainer extends StatefulWidget {
+  final String title;
+  final String iconPath;
+  final Color? iconColor;
+  final VoidCallback? onTap;
+  final Widget? page;
+  final Widget? trailing;
+  const drawerItemContainer({super.key,this.iconColor,this.onTap, this.page,required this.title,this.trailing, required this.iconPath});
+
+  @override
+  State<drawerItemContainer> createState() => _drawerItemContainerState();
+}
+
+class _drawerItemContainerState extends State<drawerItemContainer> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: CustomInkwell(
+        isCircle: false,
+        onTap: () {
+
+          // Run custom onTap if provided
+          widget.onTap?.call();
+
+          // Navigate if a page is provided
+          if (widget.page != null) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => widget.page!),
+            );
+          }
+        },
+        child: Row(
+          children: [
+            ImageIcon(
+              AssetImage("assets/icons/${widget.iconPath}.png"),
+              color: widget.iconColor ?? CustomAppColors.grey_a0a0a0,
+              size: 26,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(widget.title, style: CustomTextStyles.text16GreyA0A0A0W500),
+            ),
+             (widget.trailing != null) ? widget.trailing! : const SizedBox(),
+
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }

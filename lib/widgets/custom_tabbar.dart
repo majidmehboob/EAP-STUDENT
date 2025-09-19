@@ -68,7 +68,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
                   padding: EdgeInsets.zero,
                   labelPadding: EdgeInsets.symmetric(
                     horizontal: 12,
-                    vertical: 8,
+                    vertical: 10,
                   ),
                   indicator: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(8)),

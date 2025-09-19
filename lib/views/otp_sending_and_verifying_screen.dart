@@ -139,73 +139,84 @@ class _OTPSendingAndVerificationScreenState
 
   @override
   Widget build(BuildContext context) {
+    final isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
+
     return CustomScaffoldFirst(
       showAppBar: true,
-     leading: CustomInkwell(
-
-       onTap: () {
-       Navigator.pop(context);
-       },
-       child: const Padding(
-         padding: EdgeInsets.all(8.0), // better touch area
-         child: Icon(Icons.arrow_back, color: Colors.black),
-       ),
-
-     ),
+      leading: CustomInkwell(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Icon(Icons.arrow_back, color: Colors.black),
+        ),
+      ),
       mainbody:
-          SingleChildScrollView(child: Form(
-            key: formKey,
-            child: Padding(
-              // padding: EdgeInsets.zero,
-              padding: const EdgeInsets.fromLTRB(20.0,25.0,20.0,20.0),
-              child: Column(
-
-                children: [
-
-                  Text("Enter the OTP",style: CustomTextStyles.text28BlackBold,),
-                  const SizedBox(height: 4),
-                  Text("We have sent a 5 digit verification code to student.example@email.com",style: CustomTextStyles.text16GreyA0A0A0W600,textAlign: TextAlign.center,),
-                  SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: List.generate(5, (index) {
-                      return otpField(otpControllers[index]);
-                    }),
-                  ),
-
-
-                  const SizedBox(height: 80),
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Didn’t receive the verification code.",
-                            style: CustomTextStyles.text14GreyA0A0A0W500,
-                          ),
-                          secondsRemaining == 0
-                              ? CustomInkwell(
-                            isCircle: false,
-                            onTap: () {
-                              setState(() {
-                                secondsRemaining = 59;
-                                startTimer();
-                              });
-                            },
-                            child: Text(
-                              "Resend",
-                              style: CustomTextStyles.text14GreyA0A0A0W500.copyWith(color: CustomAppColors.primaryColor),
+      Form(
+          key: formKey,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 25.0, 20.0, 4.0),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height,
+              ),
+              child: AnimatedAlign(
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeInOut,
+                alignment:
+                isKeyboardVisible ? Alignment.topCenter : Alignment.center,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("Enter the OTP", style: CustomTextStyles.text28BlackBold),
+                    const SizedBox(height: 4),
+                    Text(
+                      "We have sent a 5 digit verification code to student.example@email.com",
+                      style: CustomTextStyles.text16GreyA0A0A0W600,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: List.generate(5, (index) {
+                        return otpField(otpControllers[index]);
+                      }),
+                    ),
+                    const SizedBox(height: 60),
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Didn’t receive the verification code.",
+                              style: CustomTextStyles.text14GreyA0A0A0W500,
                             ),
-                          )
-                              : Text(
-                            "00 : $secondsRemaining",
-                            style: CustomTextStyles.text14GreyA0A0A0W500,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      CustomButtonWidget(
+                            secondsRemaining == 0
+                                ? CustomInkwell(
+                              isCircle: false,
+                              onTap: () {
+                                setState(() {
+                                  secondsRemaining = 59;
+                                  startTimer();
+                                });
+                              },
+                              child: Text(
+                                "Resend",
+                                style: CustomTextStyles.text14GreyA0A0A0W500.copyWith(
+                                    color: CustomAppColors.primaryColor),
+                              ),
+                            )
+                                : Text(
+                              "00 : $secondsRemaining",
+                              style: CustomTextStyles.text14GreyA0A0A0W500,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        CustomButtonWidget(
                           btntext: "Verify",
                           isReverse: false,
                           btnonPressed: () {
@@ -213,20 +224,17 @@ class _OTPSendingAndVerificationScreenState
                               MaterialPageRoute(builder: (_) => const CustomScaffold()),
                                   (Route<dynamic> route) => false,
                             );
-
-                          }
-                        // btnonPressed: verifyOTP,
-                      ),
-
-                    ],
-                  ),
-
-
-
-                ],
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),)
+          ),
+        ),
+
     );
   }
 

@@ -35,7 +35,7 @@ class CustomScaffoldFirst extends StatelessWidget {
       ),
     );
     return Scaffold(
-
+   resizeToAvoidBottomInset: false,
       // backgroundColor: backgroundColor??Theme.of(context).scaffoldBackgroundColor,
       appBar: showAppBar == true
           ? AppBar(

@@ -15,8 +15,10 @@ class SigninSignupScreen extends StatefulWidget {
 class _SigninSignupScreenState extends State<SigninSignupScreen> {
   int selectedIndex = 0;
 
+
   @override
   Widget build(BuildContext context) {
+    double bottomPadding = (MediaQuery.of(context).viewInsets.bottom > 0) ? MediaQuery.of(context).viewInsets.bottom : 0;
     return
     CustomScaffoldFirst(
 
@@ -24,7 +26,7 @@ class _SigninSignupScreenState extends State<SigninSignupScreen> {
         mainbody:
         Padding(
 
-            padding:  const EdgeInsets.fromLTRB(20.0,25.0,20.0,4.0),
+            padding:   EdgeInsets.fromLTRB(20.0,25.0,20.0,4.0),
 
         child: CustomTabBar(tabLength: 2,
             tabBarViewLst:

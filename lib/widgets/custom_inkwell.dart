@@ -4,11 +4,15 @@ class CustomInkwell extends StatelessWidget {
   final VoidCallback onTap;
   final Widget child;
   final bool isCircle;
+  final double? radius;
+  final Color? color;
 
   const CustomInkwell({
     super.key,
     required this.onTap,
     required this.child,
+    this.color,
+    this.radius,
     this.isCircle = true,
   });
 
@@ -22,8 +26,9 @@ class CustomInkwell extends StatelessWidget {
       color: Colors.transparent,
       shape: shape,
       child: InkWell(
+        radius: radius,
         customBorder: shape,
-        splashColor: Colors.grey[300],
+        splashColor:color?? Colors.grey[300],
         onTap: onTap,
         child: child,
       ),
