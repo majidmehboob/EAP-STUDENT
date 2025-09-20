@@ -122,11 +122,8 @@ class _TextFormFieldCustomerBuiltState
             style:
             widget.textStyle ??
                 // CustomTextStyles.text24GreyBold,
-                TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: CustomAppColors.greyColor,
-                ),
+                CustomTextStyles.text16BlackW500,
+
             scrollPadding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             inputFormatters: widget.isNumber != true
@@ -183,7 +180,7 @@ class _TextFormFieldCustomerBuiltState
             decoration: InputDecoration(
               hintText: widget.hintTxt,
               hintStyle: CustomTextStyles.text16GreyA0A0A0W500,
-              fillColor: widget.backgroundColor ?? CustomAppColors.lightWhiteColor,
+              fillColor: widget.backgroundColor ?? CustomAppColors.lightContainerColor,
               contentPadding: widget.isOTP!
                   ? const EdgeInsets.fromLTRB(4, 4, 4, 4)
                   : EdgeInsets.symmetric(horizontal: 12, vertical: 17),
@@ -208,11 +205,11 @@ class _TextFormFieldCustomerBuiltState
               filled: true,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: CustomAppColors.lightWhiteColor),
+                borderSide: BorderSide(color: CustomAppColors.lightContainerColor),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: CustomAppColors.lightWhiteColor),
+                borderSide: BorderSide(color: CustomAppColors.lightContainerColor),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),

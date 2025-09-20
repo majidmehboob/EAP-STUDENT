@@ -34,7 +34,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
         builder: (context) {
           final tabController = DefaultTabController.of(context);
 
-          log(tabController.index.toString());
+
 
           // Listen to changes
           tabController!.addListener(() {

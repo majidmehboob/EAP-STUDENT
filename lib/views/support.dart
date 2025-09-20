@@ -8,6 +8,11 @@ class SupportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScaffold(
       titleCentr: "Support",
+        mainBody:Column(
+          children: [
+            Text("Support")
+          ],
+        ),
     );
   }
 }

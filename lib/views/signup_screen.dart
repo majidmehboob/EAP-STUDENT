@@ -1,10 +1,7 @@
-import 'dart:developer';
-import 'dart:io';
+
 
 import 'package:eap_student/constants/const.dart';
-import 'package:eap_student/views/signin_signup_screen.dart';
 import 'package:eap_student/views/otp_sending_and_verifying_screen.dart';
-
 import 'package:flutter/material.dart';
 
 import '../widgets/custom_button.dart';
@@ -57,17 +54,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("Create your account",
-                      style: CustomTextStyles.text28BlackBold),
+                  Text("Create your account", style: CustomTextStyles.text28DarkLightBold),
                   const SizedBox(height: 4),
-                  Text(
-                    "Sign up to organize, draft, and deliver with ease.!",
-                    style: CustomTextStyles.text16GreyA0A0A0W600,
-                    textAlign: TextAlign.center,
-                  ),
+                  Text("Sign up to organize, draft, and deliver with ease.!", style: CustomTextStyles.text16GreyA0A0A0W600, textAlign: TextAlign.center,),
                   const SizedBox(height: 12),
-
-
                   TextFormFieldCustomerBuilt(
                     topLable: 'Full Name',
                     prefixIcon: 'email',
@@ -135,27 +125,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
 
 
+        if (MediaQuery.of(context).viewInsets.bottom == 0)
+            Padding(
+              padding: const EdgeInsets.only(top:10,bottom: 20),
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: CustomTextStyles.text14GreyA0A0A0W500,
+                  children: [
+                    const TextSpan(text: "By signing up, you agree to the "),
+                    TextSpan(
+                      text: "Terms of service",
+                      style: CustomTextStyles.text14GreyA0A0A0W500.copyWith(
+                        color: const Color(0xFF1973BE),
+                        decoration: TextDecoration.underline,
 
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                style: CustomTextStyles.text14GreyA0A0A0W500,
-                children: [
-                  const TextSpan(text: "By signing up, you agree to the "),
-                  TextSpan(
-                    text: "Terms of service",
-                    style: CustomTextStyles.text14GreyA0A0A0W500.copyWith(
-                      color: const Color(0xFF1973BE),
+
+                      ),
                     ),
-                  ),
-                  const TextSpan(text: " and "),
-                  TextSpan(
-                    text: "Privacy policy.",
-                    style: CustomTextStyles.text14GreyA0A0A0W500.copyWith(
-                      color: const Color(0xFF1973BE),
+                    const TextSpan(text: " and "),
+                    TextSpan(
+                      text: "Privacy policy.",
+                      style: CustomTextStyles.text14GreyA0A0A0W500.copyWith(
+                        color: const Color(0xFF1973BE),
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
 

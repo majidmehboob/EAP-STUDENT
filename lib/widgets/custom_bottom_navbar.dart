@@ -62,7 +62,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     int  selectedIndex=Provider.of<OurProviderClass>(context).getIndex;
-    log(Provider.of<OurProviderClass>(context).getIndex.toString());
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
       decoration: BoxDecoration(
@@ -93,7 +93,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
           // type: BottomNavigationBarType.fixed,
 
           selectedItemColor: CustomAppColors.primaryColor,
-          unselectedItemColor: CustomAppColors.greyColor,
+
           showSelectedLabels: false,
           showUnselectedLabels: false,
           items: [

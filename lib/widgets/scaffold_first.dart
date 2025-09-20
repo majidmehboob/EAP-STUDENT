@@ -15,14 +15,13 @@ class CustomScaffoldFirst extends StatelessWidget {
     super.key,
     this.isSplash = false,
     // this.
-     this.backgroundColor,
+    this.backgroundColor,
     this.statusBarColor,
     this.statusBarIconBrightness,
     this.leading,
     this.actions,
     required this.mainbody,
     this.showAppBar = true,
-
   });
 
   @override
@@ -31,33 +30,45 @@ class CustomScaffoldFirst extends StatelessWidget {
       SystemUiOverlayStyle(
         // statusBarColor: statusBarColor ??Colors.transparent,
         // statusBarBrightness: Brightness.dark,
-        statusBarIconBrightness: statusBarIconBrightness ?? Brightness.dark, // default white icons
+        statusBarIconBrightness: statusBarIconBrightness ?? Brightness.dark,
       ),
     );
     return Scaffold(
-   resizeToAvoidBottomInset: false,
-      // backgroundColor: backgroundColor??Theme.of(context).scaffoldBackgroundColor,
+      resizeToAvoidBottomInset: false,
+
       appBar: showAppBar == true
           ? AppBar(
-        scrolledUnderElevation: 0,
-        automaticallyImplyLeading: false,
-        leading: leading != null
-            ? Padding(
-          padding: const EdgeInsets.only(left: 12.0),
-          child: leading,
-        )
-            : null,
-        actions: actions
-            ?.map((action) => Padding(
-          padding: const EdgeInsets.only(right: 12.0),
-          child: action,
-        ))
-            .toList() ??
-            [],
-        elevation: 0,
-          )
+              scrolledUnderElevation: 0,
+              automaticallyImplyLeading: false,
+              leading: leading != null
+                  ? Padding(
+                      padding: const EdgeInsets.only(left: 12.0),
+                      child: leading,
+                    )
+                  : null,
+              actions:
+                  actions
+                      ?.map(
+                        (action) => Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: action,
+                        ),
+                      )
+                      .toList() ??
+                  [],
+              elevation: 0,
+            )
           : null,
-      body: isSplash == true?mainbody:SafeArea(child:mainbody),
+      body: isSplash == true
+          ? mainbody
+          : SafeArea(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: mainbody,
+              ),
+            ),
     );
   }
 }

@@ -18,7 +18,7 @@ class _SigninSignupScreenState extends State<SigninSignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double bottomPadding = (MediaQuery.of(context).viewInsets.bottom > 0) ? MediaQuery.of(context).viewInsets.bottom : 0;
+
     return
     CustomScaffoldFirst(
 

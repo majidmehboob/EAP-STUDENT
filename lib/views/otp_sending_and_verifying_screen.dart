@@ -8,7 +8,6 @@ import '../widgets/custom_textformfield.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_inkwell.dart';
 
-
 class OTPSendingAndVerificationScreen extends StatefulWidget {
   const OTPSendingAndVerificationScreen({
     super.key,
@@ -32,8 +31,10 @@ class OTPSendingAndVerificationScreen extends StatefulWidget {
 
 class _OTPSendingAndVerificationScreenState
     extends State<OTPSendingAndVerificationScreen> {
-  final List<TextEditingController> otpControllers =
-  List.generate(6, (_) => TextEditingController());
+  final List<TextEditingController> otpControllers = List.generate(
+    6,
+    (_) => TextEditingController(),
+  );
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   bool isAccountCreation = false;
@@ -41,7 +42,8 @@ class _OTPSendingAndVerificationScreenState
   int secondsRemaining = 59;
 
   Timer? timer;
-
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -136,7 +138,6 @@ class _OTPSendingAndVerificationScreenState
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
@@ -149,46 +150,66 @@ class _OTPSendingAndVerificationScreenState
         },
         child: const Padding(
           padding: EdgeInsets.all(8.0),
-          child: Icon(Icons.arrow_back, color: Colors.black),
+          child: Icon(Icons.arrow_back,),
         ),
       ),
-      mainbody:
-      Form(
-          key: formKey,
+      mainbody: Expanded(
+        child: Center(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 25.0, 20.0, 4.0),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height,
-              ),
-              child: AnimatedAlign(
-                duration: const Duration(milliseconds: 400),
-                curve: Curves.easeInOut,
-                alignment:
-                isKeyboardVisible ? Alignment.topCenter : Alignment.center,
+            padding: const EdgeInsets.fromLTRB(20.0,20.0,20.0,5),
+            child: SingleChildScrollView(
+              child: Form(
+                key: formKey,
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Enter the OTP", style: CustomTextStyles.text28BlackBold),
+                    Text(
+                      "Enter the OTP",
+                      style: CustomTextStyles.text28DarkLightBold,
+                    ),
                     const SizedBox(height: 4),
                     Text(
                       "We have sent a 5 digit verification code to student.example@email.com",
                       style: CustomTextStyles.text16GreyA0A0A0W600,
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: List.generate(5, (index) {
                         return otpField(otpControllers[index]);
                       }),
                     ),
-                    const SizedBox(height: 60),
+                    const SizedBox(height: 20),
+                    Column(
+                      children: [
+                        TextFormFieldCustomerBuilt(
+                          obscText: true,
+                          showEyeIcon: true,
+
+                          textInputType: TextInputType.text,
+                          addBottomMargin: false,
+                          controller: passwordController,
+                          hintTxt: "Password",
+                        ),
+                        SizedBox(height: 20),
+                        TextFormFieldCustomerBuilt(
+                          obscText: true,
+                          showEyeIcon: true,
+
+                          textInputType: TextInputType.text,
+                          addBottomMargin: false,
+                          controller: confirmPasswordController,
+                          hintTxt: "Confirm Password",
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 20),
                     Column(
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               "Didn’t receive the verification code.",
@@ -196,23 +217,25 @@ class _OTPSendingAndVerificationScreenState
                             ),
                             secondsRemaining == 0
                                 ? CustomInkwell(
-                              isCircle: false,
-                              onTap: () {
-                                setState(() {
-                                  secondsRemaining = 59;
-                                  startTimer();
-                                });
-                              },
-                              child: Text(
-                                "Resend",
-                                style: CustomTextStyles.text14GreyA0A0A0W500.copyWith(
-                                    color: CustomAppColors.primaryColor),
-                              ),
-                            )
+                                    isCircle: false,
+                                    onTap: () {
+                                      setState(() {
+                                        secondsRemaining = 59;
+                                        startTimer();
+                                      });
+                                    },
+                                    child: Text(
+                                      "Resend",
+                                      style: CustomTextStyles.text14GreyA0A0A0W500
+                                          .copyWith(
+                                            color: CustomAppColors.primaryColor,
+                                          ),
+                                    ),
+                                  )
                                 : Text(
-                              "00 : $secondsRemaining",
-                              style: CustomTextStyles.text14GreyA0A0A0W500,
-                            ),
+                                    "00 : $secondsRemaining",
+                                    style: CustomTextStyles.text14GreyA0A0A0W500,
+                                  ),
                           ],
                         ),
                         const SizedBox(height: 20),
@@ -221,8 +244,10 @@ class _OTPSendingAndVerificationScreenState
                           isReverse: false,
                           btnonPressed: () {
                             Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(builder: (_) => const CustomScaffold()),
-                                  (Route<dynamic> route) => false,
+                              MaterialPageRoute(
+                                builder: (_) => const CustomScaffold(),
+                              ),
+                              (Route<dynamic> route) => false,
                             );
                           },
                         ),
@@ -234,7 +259,7 @@ class _OTPSendingAndVerificationScreenState
             ),
           ),
         ),
-
+      ),
     );
   }
 
@@ -253,4 +278,3 @@ class _OTPSendingAndVerificationScreenState
     );
   }
 }
-

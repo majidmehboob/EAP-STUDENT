@@ -8,6 +8,11 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScaffold(
       titleCentr: "Settings",
+      mainBody: Column(
+        children: [
+          Text("Settings")
+        ],
+      ),
     );
   }
 }

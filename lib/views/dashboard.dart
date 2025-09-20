@@ -21,7 +21,7 @@ class DashboardScreen extends StatelessWidget {
                   "Student Test Pack",
                   style: CustomTextStyles.text20Black700,
                 ),
-                Text("See all", style: CustomTextStyles.text14WhiteW500),
+                Text("See all", style: CustomTextStyles.text14PrimaryToWhiteW500),
               ],
             ),
             SizedBox(height: 12),

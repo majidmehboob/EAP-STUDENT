@@ -77,6 +77,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffoldFirst(
+
       leading: currentPage == 0
           ? null
           : CustomInkwell(
@@ -89,7 +90,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             },
             child: const Padding(
               padding: EdgeInsets.all(8.0), // better touch area
-              child: Icon(Icons.arrow_back, color: Colors.black),
+              child: Icon(Icons.arrow_back),
             ),
 
       ),
@@ -224,7 +225,7 @@ class OnboardPage extends StatelessWidget {
               Text(
                 title,
                 textAlign: TextAlign.center,
-                style: CustomTextStyles.text28BlackBold,
+                style: CustomTextStyles.text28DarkLightBold,
               ),
               const SizedBox(height: 8),
 

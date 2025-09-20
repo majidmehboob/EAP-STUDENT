@@ -23,8 +23,10 @@ class _SplashSecondState extends State<SplashSecond> {
       showAppBar: false,
       isSplash: true,
       mainbody: Container(
-          decoration: const BoxDecoration(
+          decoration:  BoxDecoration(
+
             image: DecorationImage(
+
               image: AssetImage('assets/backgrounds/splash_bg.png'),
               fit:BoxFit.contain,
 

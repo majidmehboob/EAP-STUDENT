@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:eap_student/constants/const.dart';
 import 'package:eap_student/views/terms_conditions.dart';
 import 'package:eap_student/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
+import '../theme/theme_manager.dart';
 import '../utils/providers.dart';
 import '../views/notifications.dart';
 import '../views/settings.dart';
@@ -18,7 +17,7 @@ class CustomScaffold extends StatefulWidget {
 
   final String? titleCentr;
 
-  const CustomScaffold({super.key, this.mainBody,this.titleCentr});
+  const CustomScaffold({super.key, this.mainBody, this.titleCentr});
 
   @override
   State<CustomScaffold> createState() => _CustomScaffoldState();
@@ -27,47 +26,64 @@ class CustomScaffold extends StatefulWidget {
 class _CustomScaffoldState extends State<CustomScaffold> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   bool isDark = false;
-  final List<String> title = ["","Setup Your Test","Add The Test","History","Profile"];
+  final List<String> title = [
+    "",
+    "Setup Your Test",
+    "Add The Test",
+    "History",
+    "Profile",
+  ];
   @override
   Widget build(BuildContext context) {
-    int currentIndex= Provider.of<OurProviderClass>(context,listen: false).getIndex;
-    double appheight = currentIndex ==0 ?88.0:76.0;
+    int currentIndex = Provider.of<OurProviderClass>(
+      context,
+      listen: false,
+    ).getIndex;
+    bool ishome =currentIndex == 0 && ModalRoute.of(context)!.isFirst;
+    double appheight = ishome ? 88.0 : 76.0;
 
     return Scaffold(
       key: scaffoldKey,
       drawerScrimColor: Colors.transparent,
       drawer: CustomDrawer(),
       resizeToAvoidBottomInset: false,
+
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(appheight),
         child: AppBar(
-          centerTitle: currentIndex !=0?true:false,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarIconBrightness: Brightness.light
+          ),
+          centerTitle: currentIndex != 0 ? true : false,
           toolbarHeight: appheight,
           scrolledUnderElevation: 0,
           elevation: 0,
-          actionsPadding: const EdgeInsets.symmetric(
-            horizontal: 12,
+          actionsPadding:  EdgeInsets.symmetric(
+            horizontal: ishome?12: 0,
             vertical: 0,
           ),
           automaticallyImplyLeading: false,
           backgroundColor: CustomAppColors.primaryColor,
 
-          title:currentIndex ==0?
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text("Hi, Kristin", style: CustomTextStyles.text24White600),
-              const SizedBox(height: 4),
-              Text(
-                "Let’s start learning",
-                style: CustomTextStyles.text14WhiteW400,
-              ),
-            ],
-          )
-              :Text(widget.titleCentr?? title[currentIndex],style: CustomTextStyles.text24White600,),
+          title: ishome
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("Hi, Kristin", style: CustomTextStyles.text24White600),
+                    const SizedBox(height: 4),
+                    Text(
+                      "Let’s start learning",
+                      style: CustomTextStyles.text14WhiteW400,
+                    ),
+                  ],
+                )
+              : Text(
+                  widget.titleCentr ?? title[currentIndex],
+                  style: CustomTextStyles.text24White600,
+                ),
 
-          leading:!ModalRoute.of(context)!.isFirst
+          leading: !ModalRoute.of(context)!.isFirst
               ? CustomInkwell(
                   onTap: () {
                     Navigator.pop(context);
@@ -80,27 +96,26 @@ class _CustomScaffoldState extends State<CustomScaffold> {
                   ),
                 )
               : Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: CustomInkwell(
-
-                            color: CustomAppColors.grey_a0a0a0,
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: CustomInkwell(
+                    color: CustomAppColors.grey_a0a0a0,
                     onTap: () {
                       FocusScope.of(context).unfocus();
                       scaffoldKey.currentState?.openDrawer();
                     },
 
-                    child:ImageIcon(
+                    child: ImageIcon(
                       AssetImage("assets/icons/menue.png"),
 
                       color: CustomAppColors.grey_f5f5f5,
                     ),
                   ),
-              ),
+                ),
           actions: [
             CustomInkwell(
               radius: 20,
               color: CustomAppColors.grey_a0a0a0,
-              onTap: (){},
+              onTap: () {},
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: const ImageIcon(
@@ -111,21 +126,24 @@ class _CustomScaffoldState extends State<CustomScaffold> {
               ),
             ),
             const SizedBox(width: 10),
-            if(currentIndex==0)
+            if (ishome)
               Image.asset("assets/images/Avatar.png", width: 40, height: 40),
           ],
         ),
       ),
 
-      body:
 
-          IndexedStack(
-            index:Provider.of<OurProviderClass>(context).getIndex,
-            children: AppScreens().screenLst,
-          ),
+
+      body: widget.mainBody??IndexedStack(
+        index: Provider.of<OurProviderClass>(context).getIndex,
+        children: AppScreens().screenLst,
+      ),
+
+
+
+
       bottomNavigationBar: CustomBottomNavBar(
         onItemTapped: (index) {
-
           Provider.of<OurProviderClass>(
             context,
             listen: false,
@@ -200,24 +218,34 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     Divider(color: CustomAppColors.lightGreyColor),
                     SizedBox(height: 12),
                     drawerItemContainer(
-                        title: "Notifications",
-                        page: NotificationsScreen(),
-                        iconPath: "notifications"),
+                      title: "Notifications",
+                      page: NotificationsScreen(),
+                      iconPath: "notifications",
+                    ),
                     drawerItemContainer(
-                        title: "History",
-                        onTap: (){Provider.of<OurProviderClass>(context,listen: false).changeBottomNavBarIndex(3);},
-                        iconPath: "history"),
+                      title: "History",
+                      onTap: () {
+                        Provider.of<OurProviderClass>(
+                          context,
+                          listen: false,
+                        ).changeBottomNavBarIndex(3);
+                      },
+                      iconPath: "history",
+                    ),
                     drawerItemContainer(
-                        title: "Tutorials",
-                        iconPath: "tutorials"),
+                      title: "Tutorials",
+                      iconPath: "tutorials",
+                    ),
                     drawerItemContainer(
-                        title: "Settings",
-                        page: SettingsScreen(),
-                        iconPath: "settings"),
+                      title: "Settings",
+                      page: SettingsScreen(),
+                      iconPath: "settings",
+                    ),
                     drawerItemContainer(
                       page: SupportScreen(),
-                        title: "Support",
-                        iconPath: "contact_support"),
+                      title: "Support",
+                      iconPath: "contact_support",
+                    ),
                     drawerItemContainer(
                       page: TermsConditionsScreen(),
                       title: "Terms & Conditions",
@@ -229,7 +257,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
               drawerItemContainer(
                 title: "Theme",
-               iconPath:  "light_mode",
+                iconPath: "light_mode",
                 iconColor: CustomAppColors.greyColor,
                 trailing: Switch(
                   trackOutlineColor: WidgetStatePropertyAll(
@@ -237,12 +265,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ),
                   inactiveTrackColor: CustomAppColors.grey_a0a0a0,
                   inactiveThumbColor: CustomAppColors.whiteColor,
-                  value: isDark,
-                  onChanged: (value) => setState(() {
-                    isDark = true;
-                  }),
+                  value: Provider.of<ThemeManager>(context, listen: false).themeData == ThemeMode.dark,
+                  onChanged: (value) {
+                    Provider.of<ThemeManager>(context,listen: false).toggleTheme(value);
+                    setState(() {});
+                  },
+                  ),
                 ),
-              ),
 
               SizedBox(height: 4),
               CustomButtonWidget(
@@ -260,9 +289,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
   }
 }
 
-
-
-
 class drawerItemContainer extends StatefulWidget {
   final String title;
   final String iconPath;
@@ -270,7 +296,15 @@ class drawerItemContainer extends StatefulWidget {
   final VoidCallback? onTap;
   final Widget? page;
   final Widget? trailing;
-  const drawerItemContainer({super.key,this.iconColor,this.onTap, this.page,required this.title,this.trailing, required this.iconPath});
+  const drawerItemContainer({
+    super.key,
+    this.iconColor,
+    this.onTap,
+    this.page,
+    required this.title,
+    this.trailing,
+    required this.iconPath,
+  });
 
   @override
   State<drawerItemContainer> createState() => _drawerItemContainerState();
@@ -284,7 +318,6 @@ class _drawerItemContainerState extends State<drawerItemContainer> {
       child: CustomInkwell(
         isCircle: false,
         onTap: () {
-
           // Run custom onTap if provided
           widget.onTap?.call();
 
@@ -305,10 +338,12 @@ class _drawerItemContainerState extends State<drawerItemContainer> {
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(widget.title, style: CustomTextStyles.text16GreyA0A0A0W500),
+              child: Text(
+                widget.title,
+                style: CustomTextStyles.text16GreyA0A0A0W500,
+              ),
             ),
-             (widget.trailing != null) ? widget.trailing! : const SizedBox(),
-
+            (widget.trailing != null) ? widget.trailing! : const SizedBox(),
           ],
         ),
       ),

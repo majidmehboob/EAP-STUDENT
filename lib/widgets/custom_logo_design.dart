@@ -47,7 +47,7 @@ class _CustomLogoState extends State<CustomLogo> {
               Text(
                 "ScoreUp",
                 style: widget.isBlack == true
-                    ? CustomTextStyles.title32Black
+                    ? CustomTextStyles.title32DarkLightBold
                     : CustomTextStyles.title32White,
               ),
             ],
