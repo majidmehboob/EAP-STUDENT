@@ -17,7 +17,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
 
 
-  Widget _buildAnimatedItem(String title, String path, bool isSelected) {
+  Widget _buildAnimatedItem(String title, String path, bool isSelected,Color iconColor) {
 
     return
 
@@ -34,7 +34,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
           ImageIcon(
             AssetImage("assets/bottom-icons/$path.png",),
             size: 26,
-            color: isSelected ? Colors.white : CustomAppColors.greyColor,
+            color: isSelected ? Colors.white : iconColor,
           ),
           AnimatedSize(
             duration: const Duration(milliseconds: 300),
@@ -62,16 +62,17 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     int  selectedIndex=Provider.of<OurProviderClass>(context).getIndex;
-
+    Color backgroundColor = Theme.of(context).bottomNavigationBarTheme.backgroundColor ?? Colors.transparent;
+    Color  iconColor = Theme.of(context).bottomNavigationBarTheme.unselectedItemColor ?? Colors.transparent;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: backgroundColor,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
         ),
-        border: Border(top: BorderSide(color: CustomAppColors.grey_d9d9d9)),
+        border: Border(top: BorderSide(color: CustomAppColors.greyD9To4C)),
         boxShadow: [
           BoxShadow(
             offset: Offset(0, -2),
@@ -99,28 +100,29 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
           items: [
             BottomNavigationBarItem(
                 label: '',
-                icon: _buildAnimatedItem("Home", "home", selectedIndex == 0),
-                backgroundColor: CustomAppColors.whiteColor
+                icon: _buildAnimatedItem("Home", "home", selectedIndex == 0,iconColor),
+                backgroundColor: backgroundColor,
+
             ),
             BottomNavigationBarItem(
                 label: '',
-                icon: _buildAnimatedItem("School", "school", selectedIndex == 1),
-                backgroundColor: CustomAppColors.whiteColor
+                icon: _buildAnimatedItem("School", "school", selectedIndex == 1,iconColor),
+                backgroundColor: backgroundColor
             ),
             BottomNavigationBarItem(
                 label: '',
-                icon: _buildAnimatedItem("Add", "add", selectedIndex == 2),
-                backgroundColor: CustomAppColors.whiteColor
+                icon: _buildAnimatedItem("Add", "add", selectedIndex == 2,iconColor),
+                backgroundColor: backgroundColor
             ),
             BottomNavigationBarItem(
                 label: '',
-                icon: _buildAnimatedItem("History", "history", selectedIndex == 3),
-                backgroundColor: CustomAppColors.whiteColor
+                icon: _buildAnimatedItem("History", "history", selectedIndex == 3,iconColor),
+                backgroundColor:backgroundColor
             ),
             BottomNavigationBarItem(
                 label: '',
-                icon: _buildAnimatedItem("User", "user", selectedIndex == 4),
-                backgroundColor: CustomAppColors.whiteColor
+                icon: _buildAnimatedItem("User", "user", selectedIndex == 4,iconColor),
+                backgroundColor:backgroundColor
             ),
           ],
         ),

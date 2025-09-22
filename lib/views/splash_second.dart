@@ -2,7 +2,9 @@ import 'package:eap_student/constants/const.dart';
 import 'package:eap_student/views/signin_signup_screen.dart';
 import 'package:eap_student/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../theme/theme_manager.dart';
 import '../widgets/custom_logo_design.dart';
 import '../widgets/scaffold_first.dart';
 import 'onboarding_screen.dart';
@@ -19,7 +21,7 @@ class _SplashSecondState extends State<SplashSecond> {
   Widget build(BuildContext context) {
     return CustomScaffoldFirst(
 
-      statusBarIconBrightness: Brightness.dark,
+      statusBarIconBrightness:Provider.of<ThemeManager>(context, listen: false).themeData == ThemeMode.dark?Brightness.light:Brightness.dark,
       showAppBar: false,
       isSplash: true,
       mainbody: Container(

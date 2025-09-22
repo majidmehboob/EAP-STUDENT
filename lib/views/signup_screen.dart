@@ -56,7 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: [
                   Text("Create your account", style: CustomTextStyles.text28DarkLightBold),
                   const SizedBox(height: 4),
-                  Text("Sign up to organize, draft, and deliver with ease.!", style: CustomTextStyles.text16GreyA0A0A0W600, textAlign: TextAlign.center,),
+                  Text("Sign up to organize, draft, and deliver with ease.!", style: CustomTextStyles.text16GreyA0ToD9W600, textAlign: TextAlign.center,),
                   const SizedBox(height: 12),
                   TextFormFieldCustomerBuilt(
                     topLable: 'Full Name',
@@ -137,7 +137,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     TextSpan(
                       text: "Terms of service",
                       style: CustomTextStyles.text14GreyA0A0A0W500.copyWith(
-                        color: const Color(0xFF1973BE),
+                        color: CustomAppColors.primaryToWhite,
                         decoration: TextDecoration.underline,
 
 
@@ -147,7 +147,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     TextSpan(
                       text: "Privacy policy.",
                       style: CustomTextStyles.text14GreyA0A0A0W500.copyWith(
-                        color: const Color(0xFF1973BE),
+                        color: CustomAppColors.primaryToWhite,
                         decoration: TextDecoration.underline,
                       ),
                     ),

@@ -101,7 +101,7 @@ class _TextFormFieldCustomerBuiltState
                 padding: EdgeInsets.only(left: 0, bottom: 8, top: 5),
                 child: Text(
                   widget.topLable!,
-                  style: CustomTextStyles.text16GreyA0A0A0W600,
+                  style: CustomTextStyles.text16GreyA0ToD9W600,
                 ),
               )
             : Container(),
@@ -122,7 +122,7 @@ class _TextFormFieldCustomerBuiltState
             style:
             widget.textStyle ??
                 // CustomTextStyles.text24GreyBold,
-                CustomTextStyles.text16BlackW500,
+                CustomTextStyles.text16DarkLightW500,
 
             scrollPadding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom),

@@ -39,7 +39,8 @@ class _CustomScaffoldState extends State<CustomScaffold> {
       context,
       listen: false,
     ).getIndex;
-    bool ishome =currentIndex == 0 && ModalRoute.of(context)!.isFirst;
+    Provider.of<ThemeManager>(context, listen: true);
+    bool ishome = currentIndex == 0 && ModalRoute.of(context)!.isFirst;
     double appheight = ishome ? 88.0 : 76.0;
 
     return Scaffold(
@@ -52,14 +53,14 @@ class _CustomScaffoldState extends State<CustomScaffold> {
         preferredSize: Size.fromHeight(appheight),
         child: AppBar(
           systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarIconBrightness: Brightness.light
+            statusBarIconBrightness: Brightness.light,
           ),
           centerTitle: currentIndex != 0 ? true : false,
           toolbarHeight: appheight,
           scrolledUnderElevation: 0,
           elevation: 0,
-          actionsPadding:  EdgeInsets.symmetric(
-            horizontal: ishome?12: 0,
+          actionsPadding: EdgeInsets.symmetric(
+            horizontal: ishome ? 12 : 0,
             vertical: 0,
           ),
           automaticallyImplyLeading: false,
@@ -132,15 +133,31 @@ class _CustomScaffoldState extends State<CustomScaffold> {
         ),
       ),
 
-
-
-      body: widget.mainBody??IndexedStack(
-        index: Provider.of<OurProviderClass>(context).getIndex,
-        children: AppScreens().screenLst,
+      // body: Builder(
+      //   builder: (context) {
+      //     // This will force the colors to update based on current theme
+      //     final isDark = Theme.of(context).brightness == Brightness.dark;
+      //     CustomAppColors.update(isDark);
+      //     CustomTextStyles.update();
+      //
+      //     return widget.mainBody ?? IndexedStack(
+      //       index: Provider.of<OurProviderClass>(context).getIndex,
+      //       children: AppScreens().screenLst,
+      //     );
+      //   },
+      // ),
+      body: Padding(
+        padding: ConstValues.pagePadding,
+        child:
+            SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: widget.mainBody ??
+              IndexedStack(
+                index: Provider.of<OurProviderClass>(context).getIndex,
+                children: AppScreens().screenLst,
+              ),
+            ),
       ),
-
-
-
 
       bottomNavigationBar: CustomBottomNavBar(
         onItemTapped: (index) {
@@ -171,14 +188,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
       top: false,
       child: Drawer(
         width: MediaQuery.sizeOf(context).width * 0.75,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(40),
-            bottomRight: Radius.circular(40),
-          ),
-        ),
-        elevation: 10,
-        backgroundColor: CustomAppColors.whiteColor,
+
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
           child: Column(
@@ -203,7 +213,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           children: [
                             Text(
                               "Kristin Watson",
-                              style: CustomTextStyles.text20Black700,
+                              style: CustomTextStyles.text20DarkLight700,
                             ),
 
                             Text(
@@ -225,6 +235,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     drawerItemContainer(
                       title: "History",
                       onTap: () {
+                        Navigator.pop(context);
                         Provider.of<OurProviderClass>(
                           context,
                           listen: false,
@@ -261,17 +272,27 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 iconColor: CustomAppColors.greyColor,
                 trailing: Switch(
                   trackOutlineColor: WidgetStatePropertyAll(
-                    CustomAppColors.grey_a0a0a0,
+                    CustomAppColors.greyA0ToC0,
                   ),
                   inactiveTrackColor: CustomAppColors.grey_a0a0a0,
                   inactiveThumbColor: CustomAppColors.whiteColor,
-                  value: Provider.of<ThemeManager>(context, listen: false).themeData == ThemeMode.dark,
+                  activeThumbColor: CustomAppColors.primaryColor,
+                  activeTrackColor: CustomAppColors.greyA0ToC0,
+                  value:
+                      Provider.of<ThemeManager>(
+                        context,
+                        listen: false,
+                      ).themeData ==
+                      ThemeMode.dark,
                   onChanged: (value) {
-                    Provider.of<ThemeManager>(context,listen: false).toggleTheme(value);
+                    Provider.of<ThemeManager>(
+                      context,
+                      listen: false,
+                    ).toggleTheme(value);
                     setState(() {});
                   },
-                  ),
                 ),
+              ),
 
               SizedBox(height: 4),
               CustomButtonWidget(
@@ -323,6 +344,7 @@ class _drawerItemContainerState extends State<drawerItemContainer> {
 
           // Navigate if a page is provided
           if (widget.page != null) {
+            Navigator.pop(context);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => widget.page!),

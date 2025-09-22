@@ -67,7 +67,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             SizedBox(height: 12,),
             CustomContainer(txt: "Detailed Explanations", bg: CustomAppColors.lightPurpleColor, icnName: 'detail',txtAlgn: TextAlign.start),
             SizedBox(height: 12,),
-            CustomContainer(txt: "Automated Paper Generation", bg: CustomAppColors.lightPink_FFEFE2, icnName: 'page_generate',txtAlgn: TextAlign.start),
+            CustomContainer(txt: "Automated Paper Generation", bg: CustomAppColors.lightPinkFFEFE2, icnName: 'page_generate',txtAlgn: TextAlign.start),
           ]
         )
       ),

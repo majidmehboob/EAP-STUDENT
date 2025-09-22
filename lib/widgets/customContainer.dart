@@ -11,6 +11,7 @@ class CustomContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Container(
+
       padding: EdgeInsets.symmetric(horizontal: 12,vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
@@ -22,7 +23,7 @@ class CustomContainer extends StatelessWidget {
         children:[
            Image.asset("assets/icons/$icnName.png",width: 32,),
           SizedBox(width: 10,),
-          Expanded(child:      Text(txt,style: CustomTextStyles.text16Black600,textAlign: txtAlgn??TextAlign.center,))
+          Expanded(child:Text(txt,style: CustomTextStyles.text16Black600,textAlign: txtAlgn??TextAlign.center,))
 
         ]) ,
     );

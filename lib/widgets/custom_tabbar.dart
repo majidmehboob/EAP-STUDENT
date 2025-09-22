@@ -52,7 +52,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
 
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: CustomAppColors.lightGreyColor),
+                  border: Border.all(color: CustomAppColors.greyD9To4C),
                   color: Colors.transparent,
                 ),
                 // child: Theme(

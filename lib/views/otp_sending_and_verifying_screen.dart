@@ -153,108 +153,106 @@ class _OTPSendingAndVerificationScreenState
           child: Icon(Icons.arrow_back,),
         ),
       ),
-      mainbody: Expanded(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20.0,20.0,20.0,5),
-            child: SingleChildScrollView(
-              child: Form(
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Enter the OTP",
-                      style: CustomTextStyles.text28DarkLightBold,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      "We have sent a 5 digit verification code to student.example@email.com",
-                      style: CustomTextStyles.text16GreyA0A0A0W600,
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: List.generate(5, (index) {
-                        return otpField(otpControllers[index]);
-                      }),
-                    ),
-                    const SizedBox(height: 20),
-                    Column(
-                      children: [
-                        TextFormFieldCustomerBuilt(
-                          obscText: true,
-                          showEyeIcon: true,
+      mainbody: Center(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20.0,20.0,20.0,5),
+          child: SingleChildScrollView(
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Enter the OTP",
+                    style: CustomTextStyles.text28DarkLightBold,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    "We have sent a 5 digit verification code to student.example@email.com",
+                    style: CustomTextStyles.text16GreyA0ToD9W600,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: List.generate(5, (index) {
+                      return otpField(otpControllers[index]);
+                    }),
+                  ),
+                  const SizedBox(height: 20),
+                  Column(
+                    children: [
+                      TextFormFieldCustomerBuilt(
+                        obscText: true,
+                        showEyeIcon: true,
 
-                          textInputType: TextInputType.text,
-                          addBottomMargin: false,
-                          controller: passwordController,
-                          hintTxt: "Password",
-                        ),
-                        SizedBox(height: 20),
-                        TextFormFieldCustomerBuilt(
-                          obscText: true,
-                          showEyeIcon: true,
+                        textInputType: TextInputType.text,
+                        addBottomMargin: false,
+                        controller: passwordController,
+                        hintTxt: "Password",
+                      ),
+                      SizedBox(height: 20),
+                      TextFormFieldCustomerBuilt(
+                        obscText: true,
+                        showEyeIcon: true,
 
-                          textInputType: TextInputType.text,
-                          addBottomMargin: false,
-                          controller: confirmPasswordController,
-                          hintTxt: "Confirm Password",
-                        ),
-                      ],
-                    ),
+                        textInputType: TextInputType.text,
+                        addBottomMargin: false,
+                        controller: confirmPasswordController,
+                        hintTxt: "Confirm Password",
+                      ),
+                    ],
+                  ),
 
-                    const SizedBox(height: 20),
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Didn’t receive the verification code.",
-                              style: CustomTextStyles.text14GreyA0A0A0W500,
-                            ),
-                            secondsRemaining == 0
-                                ? CustomInkwell(
-                                    isCircle: false,
-                                    onTap: () {
-                                      setState(() {
-                                        secondsRemaining = 59;
-                                        startTimer();
-                                      });
-                                    },
-                                    child: Text(
-                                      "Resend",
-                                      style: CustomTextStyles.text14GreyA0A0A0W500
-                                          .copyWith(
-                                            color: CustomAppColors.primaryColor,
-                                          ),
-                                    ),
-                                  )
-                                : Text(
-                                    "00 : $secondsRemaining",
-                                    style: CustomTextStyles.text14GreyA0A0A0W500,
+                  const SizedBox(height: 20),
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Didn’t receive the verification code.",
+                            style: CustomTextStyles.text14GreyA0A0A0W500,
+                          ),
+                          secondsRemaining == 0
+                              ? CustomInkwell(
+                                  isCircle: false,
+                                  onTap: () {
+                                    setState(() {
+                                      secondsRemaining = 59;
+                                      startTimer();
+                                    });
+                                  },
+                                  child: Text(
+                                    "Resend",
+                                    style: CustomTextStyles.text14GreyA0A0A0W500
+                                        .copyWith(
+                                          color: CustomAppColors.primaryColor,
+                                        ),
                                   ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        CustomButtonWidget(
-                          btntext: "Verify",
-                          isReverse: false,
-                          btnonPressed: () {
-                            Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                builder: (_) => const CustomScaffold(),
-                              ),
-                              (Route<dynamic> route) => false,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                                )
+                              : Text(
+                                  "00 : $secondsRemaining",
+                                  style: CustomTextStyles.text14GreyA0A0A0W500,
+                                ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      CustomButtonWidget(
+                        btntext: "Verify",
+                        isReverse: false,
+                        btnonPressed: () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (_) => const CustomScaffold(),
+                            ),
+                            (Route<dynamic> route) => false,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
