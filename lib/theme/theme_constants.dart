@@ -14,7 +14,8 @@ ThemeData lightTheme = ThemeData(
   highlightColor: Colors.transparent,
   splashColor: Colors.transparent,
   focusColor: Colors.transparent,
-  splashFactory: NoSplash.splashFactory,
+  // splashFactory: NoSplash.splashFactory,
+
   brightness: Brightness.light,
   bottomNavigationBarTheme: customBottomNavBarTheme(isDark: false),
   scaffoldBackgroundColor: customScaffoldBgColor(isDark: false),
@@ -35,7 +36,7 @@ ThemeData darkTheme = ThemeData(
   highlightColor: Colors.transparent,
   splashColor: Colors.transparent,
   focusColor: Colors.transparent,
-  splashFactory: NoSplash.splashFactory,
+  // splashFactory: NoSplash.splashFactory,
   bottomNavigationBarTheme: customBottomNavBarTheme(),
   appBarTheme: appbarTheme(),
   scaffoldBackgroundColor: customScaffoldBgColor(),
@@ -89,7 +90,7 @@ BottomNavigationBarThemeData customBottomNavBarTheme({bool isDark = true}) =>Bot
   unselectedItemColor: isDark?CustomAppColors.whiteColor:CustomAppColors.greyColor,
 );
 
-//------------------------------------[ Custom Switch Theme ]--------------------------------------//
+//------------------------------------[ Custom Slider Theme ]--------------------------------------//
 
 SliderThemeData customSliderTheme({bool isDark = true}) => SliderThemeData(
   trackHeight: 8,

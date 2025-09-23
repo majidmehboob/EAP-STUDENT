@@ -48,7 +48,7 @@ class _CustomButtonWidgetState extends State<CustomButtonWidget> {
                     size: 20,
                     color: widget.iconColor ?? CustomAppColors.whiteColor,
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 4),
                   Text(
                     widget.btntext,
 
@@ -62,9 +62,11 @@ class _CustomButtonWidgetState extends State<CustomButtonWidget> {
               )
             : Text(
                 widget.btntext,
-                style: widget.isReverse
-                    ? CustomTextStyles.text20Black600
-                    : CustomTextStyles.text20White700,
+                style:
+                    widget.btnTxtStyle ??
+                    (widget.isReverse
+                        ? CustomTextStyles.text20Black600
+                        : CustomTextStyles.text20White700),
               ));
 
     final bgColor =
@@ -76,12 +78,15 @@ class _CustomButtonWidgetState extends State<CustomButtonWidget> {
       onPressed: widget.btnonPressed,
 
       style: ElevatedButton.styleFrom(
-        minimumSize: Size(widget.width ?? double.infinity, 52),
+        minimumSize: widget.shrinkHeight == true
+            ? null
+            : Size(widget.width ?? double.infinity, 52),
+        padding: widget.shrinkHeight == true
+            ? const EdgeInsets.all(8.0)
+            : EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: widget.isReverse
-              ? BorderSide(width: 2, color: CustomAppColors.primaryColor)
-              : BorderSide(width: 0, color: CustomAppColors.primaryColor),
+          borderRadius:BorderRadius.circular(widget.shrinkHeight==true?4.0:8),
+          side: widget.backgroundColor!=null ? BorderSide(width: 0, color: widget.backgroundColor!) : ( widget.isReverse ? BorderSide(width: 2, color: CustomAppColors.primaryColor) : BorderSide(width: 0, color: CustomAppColors.primaryColor)),
         ),
         backgroundColor: bgColor,
         foregroundColor: CustomAppColors.primaryColor,

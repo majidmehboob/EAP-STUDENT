@@ -84,47 +84,55 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-        child: BottomNavigationBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          currentIndex: selectedIndex,
-          onTap: (index) {
-            widget.onItemTapped(index);
-          },
-          // type: BottomNavigationBarType.fixed,
+        child: Theme(
+          data:ThemeData(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            splashFactory: NoSplash.splashFactory,
+          ) ,
+          child: BottomNavigationBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            currentIndex: selectedIndex,
+            onTap: (index) {
+              widget.onItemTapped(index);
+            },
+            // type: BottomNavigationBarType.fixed,
 
-          selectedItemColor: CustomAppColors.primaryColor,
+            selectedItemColor: CustomAppColors.primaryColor,
 
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          items: [
-            BottomNavigationBarItem(
-                label: '',
-                icon: _buildAnimatedItem("Home", "home", selectedIndex == 0,iconColor),
-                backgroundColor: backgroundColor,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            items: [
+              BottomNavigationBarItem(
+                  label: '',
+                  icon: _buildAnimatedItem("Home", "home", selectedIndex == 0,iconColor),
+                  backgroundColor: backgroundColor,
 
-            ),
-            BottomNavigationBarItem(
-                label: '',
-                icon: _buildAnimatedItem("School", "school", selectedIndex == 1,iconColor),
-                backgroundColor: backgroundColor
-            ),
-            BottomNavigationBarItem(
-                label: '',
-                icon: _buildAnimatedItem("Add", "add", selectedIndex == 2,iconColor),
-                backgroundColor: backgroundColor
-            ),
-            BottomNavigationBarItem(
-                label: '',
-                icon: _buildAnimatedItem("History", "history", selectedIndex == 3,iconColor),
-                backgroundColor:backgroundColor
-            ),
-            BottomNavigationBarItem(
-                label: '',
-                icon: _buildAnimatedItem("User", "user", selectedIndex == 4,iconColor),
-                backgroundColor:backgroundColor
-            ),
-          ],
+              ),
+              BottomNavigationBarItem(
+                  label: '',
+                  icon: _buildAnimatedItem("Quiz", "school", selectedIndex == 1,iconColor),
+                  backgroundColor: backgroundColor
+              ),
+              BottomNavigationBarItem(
+                  label: '',
+                  icon: _buildAnimatedItem("Add", "add", selectedIndex == 2,iconColor),
+                  backgroundColor: backgroundColor
+              ),
+              BottomNavigationBarItem(
+                  label: '',
+                  icon: _buildAnimatedItem("History", "history", selectedIndex == 3,iconColor),
+                  backgroundColor:backgroundColor
+              ),
+              BottomNavigationBarItem(
+                  label: '',
+                  icon: _buildAnimatedItem("Profile", "user", selectedIndex == 4,iconColor),
+                  backgroundColor:backgroundColor
+              ),
+            ],
+          ),
         ),
       ),
     );

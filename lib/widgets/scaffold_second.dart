@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:eap_student/constants/const.dart';
 import 'package:eap_student/views/terms_conditions.dart';
 import 'package:eap_student/widgets/custom_button.dart';
@@ -55,7 +57,7 @@ class _CustomScaffoldState extends State<CustomScaffold> {
           systemOverlayStyle: SystemUiOverlayStyle(
             statusBarIconBrightness: Brightness.light,
           ),
-          centerTitle: currentIndex != 0 ? true : false,
+          centerTitle: currentIndex != 0 || !ModalRoute.of(context)!.isFirst ? true : false,
           toolbarHeight: appheight,
           scrolledUnderElevation: 0,
           elevation: 0,
@@ -133,40 +135,51 @@ class _CustomScaffoldState extends State<CustomScaffold> {
         ),
       ),
 
-      // body: Builder(
-      //   builder: (context) {
-      //     // This will force the colors to update based on current theme
-      //     final isDark = Theme.of(context).brightness == Brightness.dark;
-      //     CustomAppColors.update(isDark);
-      //     CustomTextStyles.update();
-      //
-      //     return widget.mainBody ?? IndexedStack(
-      //       index: Provider.of<OurProviderClass>(context).getIndex,
-      //       children: AppScreens().screenLst,
-      //     );
-      //   },
-      // ),
-      body: Padding(
-        padding: ConstValues.pagePadding,
-        child:
-            SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: widget.mainBody ??
+
+      body: PopScope(
+        canPop: currentIndex == 0 && widget.mainBody == null,
+          onPopInvokedWithResult: (bool didPop, result) async {
+          log(currentIndex.toString());
+          log(didPop.toString());
+          log(widget.mainBody.toString());
+          if(!didPop && widget.mainBody!=null && !ModalRoute.of(context)!.isFirst){
+            Navigator.pop(context);
+          }
+            if (!didPop && currentIndex != 0 && widget.mainBody == null) {
+              Provider.of<OurProviderClass>(context, listen: false)
+                  .changeBottomNavBarIndex(0);
+            }
+          },
+
+
+        child: Padding(
+          padding: ConstValues.pagePadding,
+          child:
+              widget.mainBody!=null ?
+                  SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    child: widget.mainBody,
+                  ):
               IndexedStack(
                 index: Provider.of<OurProviderClass>(context).getIndex,
                 children: AppScreens().screenLst,
               ),
-            ),
+        ),
       ),
 
       bottomNavigationBar: CustomBottomNavBar(
-        onItemTapped: (index) {
-          Provider.of<OurProviderClass>(
-            context,
-            listen: false,
-          ).changeBottomNavBarIndex(index);
+        onItemTapped: (index)async {
+          final provider = Provider.of<OurProviderClass>(context, listen: false);
+
+          if (Navigator.of(context).canPop()) {
+            await Navigator.of(context).maybePop();
+            // Navigator.of(context).popUntil((route) => route.isFirst);
+          }
+
+          provider.changeBottomNavBarIndex(index);
         },
       ),
+
     );
   }
 }
@@ -337,6 +350,7 @@ class _drawerItemContainerState extends State<drawerItemContainer> {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       child: CustomInkwell(
+        color: widget.trailing!=null?Colors.transparent:null,
         isCircle: false,
         onTap: () {
           // Run custom onTap if provided

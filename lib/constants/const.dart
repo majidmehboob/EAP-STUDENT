@@ -30,6 +30,10 @@ class CustomAppColors {
   static const Color lightBlueColor = Color(0xFFCEECFE);
   static const Color lightBlue68C6FF = Color(0xFF68C6FF);
   static const Color lightBlueA0DBFF = Color(0xFFA0DBFF);
+  static const Color lightBlueB4F9FF = Color(0xFFB4F9FF);
+  static const Color lightBlue00B8C8 = Color(0xFF00B8C8);
+  static const Color lightBlueF3FEFF = Color(0xFFF3FEFF);
+
   static const Color lightPink = Color(0xFFEFE0FF);
   static const Color lightPinkC691FF = Color(0xFFC691FF);
   static const Color lightPink_FF8500F = Color(0x33FF8500);
@@ -39,9 +43,12 @@ class CustomAppColors {
   static const Color lightGreenD5FFA1 = Color(0xFFD5FFA1);
   static const Color lightGreenBDFF6D = Color(0xFFBDFF6D);
   static const Color lightOrangeColor = Color(0xFFFFF4BD);
+
   static const Color lightOrangeFDE986 = Color(0xFFFDE986);
+  static const Color lightOrangeFFB584= Color(0xFFFFB584);
   static const Color lightYellowFFEA7E =Color(0xFFFFEA7E);
   static const Color lightPurpleColor = Color(0xFFEFE0FF);
+  static const Color lightPurpleAAABD6 = Color(0xFFAAABD6);
   static const Color grey2E2E2E = Color(0xFF2E2E2E);
   static const Color greyC0C0C0 = Color(0xFFC0C0C0);
 
@@ -57,11 +64,19 @@ class CustomAppColors {
   static Color greyF1To2E = greyF1F1F1;
   static Color greyF7To2E = lightWhiteColor;
   static Color blueCETo68 = lightBlueColor;
-  static Color pinkLightToC9 = lightPink;
+
   static Color pinkFFEFE2ToFFD1AB = lightPinkFFEFE2;
+
+
+  static Color blueF3ToB4 = lightBlueF3FEFF;
+
   static Color orangelightToFF6905 = lightOrangeColor;
-  static Color bluelightToFF6905 = lightBlueColor;
   static Color greenlightToD5FFA1 = lightGreenColor;
+  static Color blueLightToPurpleAAABD6 = lightBlueColor;
+  static Color bluelightToFF6905 = lightBlueColor;
+  static Color pinkLightToOrangeFFB584 = lightPinkFFD1AB;
+  static Color pinkLightToC9 = lightPink;
+
 
   static void update(bool isDark) {
     log("Wanted to know how many times the function render");
@@ -80,9 +95,12 @@ class CustomAppColors {
     greyF1To2E = isDark ? grey2E2E2E: greyF1F1F1;
     grey73ToC0= isDark ? greyC0C0C0 : greyColor;
     greyF7To2E = isDark ? grey2E2E2E : lightWhiteColor;
+    blueF3ToB4 = isDark ? lightBlueB4F9FF : lightBlueF3FEFF;
+
+    blueLightToPurpleAAABD6  = isDark ? lightPurpleAAABD6 : lightBlueColor;
+    pinkLightToOrangeFFB584  = isDark ? lightOrangeFFB584 : lightPinkFFD1AB;
   }
 }
-
 //-----------------------------------------------------    [  App Screens ]
 
 class AppScreens {
@@ -102,7 +120,7 @@ class ConstValues {
     20.0,
     10.0,
     20.0,
-    6,
+    10.0,
   );
   static const EdgeInsetsGeometry vertical12Padding = EdgeInsets.symmetric(
     vertical: 12.0,
@@ -129,6 +147,8 @@ class CustomTextStyles {
   static late TextStyle text14Grey73ToC0W500;
   static late TextStyle text14DarkLightW500;
 
+  static late TextStyle text16Grey73ToC0600;
+  static late TextStyle text16Grey73ToC0500;
 
   //      [ 🎉 32 ]
   static const TextStyle title32Black = TextStyle(
@@ -168,6 +188,7 @@ class CustomTextStyles {
     color: CustomAppColors.whiteColor,
   );
   static const TextStyle text20Black700 = TextStyle(
+
     fontSize: 20,
     fontWeight: FontWeight.w700,
     color: CustomAppColors.blackColor,
@@ -252,6 +273,27 @@ class CustomTextStyles {
 
   //      [ 🎉 14 ]
 
+  static const TextStyle text14GreyW600 = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: CustomAppColors.greyColor,
+  );
+  static const TextStyle text14Blue00B8C8W600 = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: CustomAppColors.lightBlue00B8C8,
+  );
+  static const TextStyle text14LightOrangeW600 = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: CustomAppColors.lightOrangeColor,
+  );
+  static const TextStyle text14PrimaryW600 = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: CustomAppColors.primaryColor,
+  );
+
   static const TextStyle text14GreyA0A0A0W500 = TextStyle(
     fontSize: 14,
     height: 1.4,
@@ -273,11 +315,7 @@ class CustomTextStyles {
     fontWeight: FontWeight.w500,
     color: CustomAppColors.greyColor,
   );
-  static const TextStyle text14GreyW600 = TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.w600,
-    color: CustomAppColors.greyColor,
-  );
+
   static const TextStyle text14WhiteW500 = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w500,
@@ -327,5 +365,8 @@ class CustomTextStyles {
     text16DarkLight600 = text16Black600.copyWith(color: CustomAppColors.darkLightColor);
     text14Grey73ToC0W500 = text14GreyW500.copyWith(color: CustomAppColors.grey73ToC0);
     text14DarkLightW500 = text14WhiteW500.copyWith(color: CustomAppColors.darkLightColor);
+    text16Grey73ToC0600 = text16GreyW600.copyWith(color: CustomAppColors.grey73ToC0);
+    text16Grey73ToC0500 = text16DarkLightW500.copyWith(color: CustomAppColors.grey73ToC0);
+
   }
 }
