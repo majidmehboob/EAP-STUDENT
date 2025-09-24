@@ -1,6 +1,8 @@
 import 'package:eap_student/widgets/customContainer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../Utils/providers.dart';
 import '../constants/const.dart';
 import '../widgets/custom_button.dart';
 
@@ -79,7 +81,6 @@ class DashboardScreen extends StatelessWidget {
               ],
             ),
           ),
-
           SizedBox(height: 28),
           SizedBox(
             width: MediaQuery.of(context).size.width,

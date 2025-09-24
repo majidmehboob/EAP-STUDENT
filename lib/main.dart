@@ -25,30 +25,7 @@ void main() async {
   );
 }
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Consumer<ThemeManager>(
-//       builder: (context, themeManager, _) {
-//         SystemChrome.setPreferredOrientations([
-//           DeviceOrientation.portraitUp,
-//           DeviceOrientation.portraitDown,
-//         ]);
-//
-//         return MaterialApp(
-//           title: 'EAP App',
-//           debugShowCheckedModeBanner: false,
-//           theme: lightTheme,
-//           darkTheme: darkTheme,
-//           themeMode: themeManager.themeData, // listens automatically
-//           home: SplashFirst(),
-//         );
-//       },
-//     );
-//   }
-// }
+
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -95,6 +72,31 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Consumer<ThemeManager>(
+//       builder: (context, themeManager, _) {
+//         SystemChrome.setPreferredOrientations([
+//           DeviceOrientation.portraitUp,
+//           DeviceOrientation.portraitDown,
+//         ]);
+//
+//         return MaterialApp(
+//           title: 'EAP App',
+//           debugShowCheckedModeBanner: false,
+//           theme: lightTheme,
+//           darkTheme: darkTheme,
+//           themeMode: themeManager.themeData, // listens automatically
+//           home: SplashFirst(),
+//         );
+//       },
+//     );
+//   }
+// }
 
 // class _MyAppState extends State<MyApp> {
 //   @override

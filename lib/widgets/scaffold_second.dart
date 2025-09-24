@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:eap_student/constants/const.dart';
 import 'package:eap_student/views/terms_conditions.dart';
+import 'package:eap_student/views/tutorial.dart';
 import 'package:eap_student/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,10 +17,12 @@ import 'custom_inkwell.dart';
 
 class CustomScaffold extends StatefulWidget {
   final Widget? mainBody;
-
+  final Widget? bottomWidget;
   final String? titleCentr;
+  final bool? isScrollAllow;
 
-  const CustomScaffold({super.key, this.mainBody, this.titleCentr});
+
+  const CustomScaffold({super.key, this.mainBody, this.titleCentr,this.isScrollAllow = true,  this.bottomWidget,});
 
   @override
   State<CustomScaffold> createState() => _CustomScaffoldState();
@@ -27,21 +30,17 @@ class CustomScaffold extends StatefulWidget {
 
 class _CustomScaffoldState extends State<CustomScaffold> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  bool isDark = false;
-  final List<String> title = [
-    "",
-    "Setup Your Test",
-    "Add The Test",
-    "History",
-    "Profile",
-  ];
+
+
+
   @override
   Widget build(BuildContext context) {
     int currentIndex = Provider.of<OurProviderClass>(
       context,
       listen: false,
     ).getIndex;
-    Provider.of<ThemeManager>(context, listen: true);
+
+    // Provider.of<ThemeManager>(context, listen: true);
     bool ishome = currentIndex == 0 && ModalRoute.of(context)!.isFirst;
     double appheight = ishome ? 88.0 : 76.0;
 
@@ -49,7 +48,7 @@ class _CustomScaffoldState extends State<CustomScaffold> {
       key: scaffoldKey,
       drawerScrimColor: Colors.transparent,
       drawer: CustomDrawer(),
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
 
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(appheight),
@@ -81,10 +80,30 @@ class _CustomScaffoldState extends State<CustomScaffold> {
                     ),
                   ],
                 )
-              : Text(
-                  widget.titleCentr ?? title[currentIndex],
-                  style: CustomTextStyles.text24White600,
-                ),
+              : Consumer<OurProviderClass>(
+            builder: (context, provider, _) {
+              final List<String> pageQuizTitles = [
+                "Setup Your Test",
+                "Choose Your Subject",
+                "Choose Your Book",
+                "Select Your Chapter",
+                "Select Your Topic"
+              ];
+
+              final List<dynamic> title = [
+                "",
+                pageQuizTitles[provider.getCurrentPageForGeneratePaperWizard],
+                "Add The Test",
+                "History",
+                "Profile",
+              ];
+
+              return Text(
+                widget.titleCentr ?? title[provider.getIndex],
+                style: CustomTextStyles.text24White600,
+              );
+            },
+          ),
 
           leading: !ModalRoute.of(context)!.isFirst
               ? CustomInkwell(
@@ -118,7 +137,9 @@ class _CustomScaffoldState extends State<CustomScaffold> {
             CustomInkwell(
               radius: 20,
               color: CustomAppColors.grey_a0a0a0,
-              onTap: () {},
+              onTap: () {
+
+              },
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: const ImageIcon(
@@ -139,9 +160,6 @@ class _CustomScaffoldState extends State<CustomScaffold> {
       body: PopScope(
         canPop: currentIndex == 0 && widget.mainBody == null,
           onPopInvokedWithResult: (bool didPop, result) async {
-          log(currentIndex.toString());
-          log(didPop.toString());
-          log(widget.mainBody.toString());
           if(!didPop && widget.mainBody!=null && !ModalRoute.of(context)!.isFirst){
             Navigator.pop(context);
           }
@@ -152,22 +170,42 @@ class _CustomScaffoldState extends State<CustomScaffold> {
           },
 
 
-        child: Padding(
-          padding: ConstValues.pagePadding,
-          child:
-              widget.mainBody!=null ?
-                  SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    child: widget.mainBody,
-                  ):
-              IndexedStack(
-                index: Provider.of<OurProviderClass>(context).getIndex,
-                children: AppScreens().screenLst,
-              ),
+        child: SafeArea(
+          child: Padding(
+            padding: ConstValues.pagePadding,
+            child:
+                widget.mainBody!=null ?
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: widget.isScrollAllow!
+                              ? SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            child: widget.mainBody,
+                          )
+                              :widget. mainBody ?? const SizedBox(),
+                        ),
+                        // bottom content (button etc.)
+                        if (widget.bottomWidget != null)
+                          SafeArea(
+
+                            child: widget.bottomWidget!,
+                          ),
+                      ],
+                    )
+                 :
+
+
+                IndexedStack(
+                  index: Provider.of<OurProviderClass>(context).getIndex,
+                  children: AppScreens().screenLst,
+                ),
+          ),
         ),
       ),
 
-      bottomNavigationBar: CustomBottomNavBar(
+      bottomNavigationBar: (ModalRoute.of(context)!.isFirst && widget.mainBody==null )?CustomBottomNavBar(
         onItemTapped: (index)async {
           final provider = Provider.of<OurProviderClass>(context, listen: false);
 
@@ -178,7 +216,7 @@ class _CustomScaffoldState extends State<CustomScaffold> {
 
           provider.changeBottomNavBarIndex(index);
         },
-      ),
+      ):null,
 
     );
   }
@@ -259,6 +297,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     drawerItemContainer(
                       title: "Tutorials",
                       iconPath: "tutorials",
+                      page: TutorialScreen(),
+
                     ),
                     drawerItemContainer(
                       title: "Settings",
@@ -312,7 +352,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 btnTxtStyle: CustomTextStyles.text18WhiteBold,
                 btntext: "Logout",
                 isReverse: false,
-                btnonPressed: () {},
+                btnonPressed: () {
+                  ConstFunctions.showDialogBox(context: context, yes: (){}, no: (){}, title: "Logout Account");
+                },
                 iconPath: "assets/icons/logout.png",
               ),
             ],

@@ -131,8 +131,61 @@ class ConstValues {
 }
 //-----------------------------------------------------    [  Box Decoration ]
 
-class CustomBoxDecoration {}
+class CustomBoxDecoration {
 
+  static  BoxDecoration decorationRadius8 = BoxDecoration(
+    color: CustomAppColors.greyF7To2E,
+    borderRadius: BorderRadius.circular(8.0),
+
+  );
+}
+//-----------------------------------------------------    [  Const Functions ]
+class ConstFunctions {
+  static showDialogBox(
+      {required BuildContext context,
+        required Function yes,
+        required Function no,
+
+        required String title}) {
+    return showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: CustomAppColors.darkLightColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          surfaceTintColor: CustomAppColors.primaryColor,
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+
+
+Align(
+  alignment: Alignment.topRight,
+),
+
+              const SizedBox(height: 16),
+
+              // Message
+              // Text("Do you want to Logout ?",
+              Text(
+                title,
+                style: CustomTextStyles.text24White600,
+                textAlign: TextAlign.center,
+
+              ),
+            ],
+          ),
+
+        );
+      },
+    );
+  }
+
+}
 //-----------------------------------------------------    [  Text Styles ]
 
 class CustomTextStyles {
@@ -148,8 +201,9 @@ class CustomTextStyles {
   static late TextStyle text14DarkLightW500;
 
   static late TextStyle text16Grey73ToC0600;
+  static late TextStyle text16Grey73ToC0400;
   static late TextStyle text16Grey73ToC0500;
-
+  static late TextStyle text20Grey73ToC0600;
   //      [ 🎉 32 ]
   static const TextStyle title32Black = TextStyle(
     color: CustomAppColors.blackColor,
@@ -365,8 +419,10 @@ class CustomTextStyles {
     text16DarkLight600 = text16Black600.copyWith(color: CustomAppColors.darkLightColor);
     text14Grey73ToC0W500 = text14GreyW500.copyWith(color: CustomAppColors.grey73ToC0);
     text14DarkLightW500 = text14WhiteW500.copyWith(color: CustomAppColors.darkLightColor);
+    text16Grey73ToC0400 = text16GreyW400.copyWith(color: CustomAppColors.grey73ToC0);
     text16Grey73ToC0600 = text16GreyW600.copyWith(color: CustomAppColors.grey73ToC0);
     text16Grey73ToC0500 = text16DarkLightW500.copyWith(color: CustomAppColors.grey73ToC0);
+    text20Grey73ToC0600 = text20Grey600.copyWith(color: CustomAppColors.grey73ToC0);
 
   }
 }

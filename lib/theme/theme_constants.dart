@@ -22,6 +22,7 @@ ThemeData lightTheme = ThemeData(
   drawerTheme: customDrawerTheme(isDark: false),
   appBarTheme: appbarTheme(isDark: false),
   sliderTheme: customSliderTheme(isDark: false),
+
 );
 
 ThemeData darkTheme = ThemeData(
@@ -42,6 +43,7 @@ ThemeData darkTheme = ThemeData(
   scaffoldBackgroundColor: customScaffoldBgColor(),
   drawerTheme: customDrawerTheme(),
   sliderTheme: customSliderTheme(),
+
 );
 
 
